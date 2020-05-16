@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tax Calculator</title>
+</head>
+<body>
+    <center>
+        <div class="status"></div>
+        <br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+        <table>
+            <tr>
+                <th align="left">
+                    Enter your salary:
+                </th>
+                <th>
+                    <input type="text" class="salary" name="salary" style="width:400px" />
+                </th>
+            </tr>
+            <tr>
+                <th align="left">
+                    Enter your deductions:
+                </th>
+                <th>
+                    <input type="text" class="deductions" name="deductions" style="width:400px" />
+                </th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>
+                    <input type="button" id="calculate" value="Calculate" style="width:100px" />
+                </th>
+            </tr>
+<!--            <tr>-->
+<!--                <th align="left">-->
+<!--                    Enter the short URL to be removed:-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <input type="text" class="removeUrl" name="removeUrl" style="width:400px" />-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <input type="button" id="removeUrl" value="Remove It" style="width:100px"/>-->
+<!--                </th>-->
+<!--            </tr>-->
+        </table>
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $("#calculate").click(function(e) {
+            e.preventDefault();
+            var salary = $(".salary").val();
+            var deductions = $(".deductions").val();
+            var obj = {salary: salary, deductions: deductions};
+            $.ajax({
+                url: 'http://localhost:8080/calculate',
+                type: 'POST',
+                headers:{"Content-type": "application/json"},
+                data: JSON.stringify(obj),
+                success: function (res) {
+                            $(".status").text("Your Tax is Rs. " + res + "/-");
+                        }
+            })
+        })
+    </script>
+</body>
+</html>
